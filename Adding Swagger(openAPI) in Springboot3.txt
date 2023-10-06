@@ -1,0 +1,62 @@
+
+/*This swagger(OpenAPI) will work in Spring Boot 3 and above version of project. */
+
+SwaggerConfig.java
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+
+@Configuration
+public class OpenApiConfig {
+
+    @Bean
+    public OpenAPI usersMicroserviceOpenAPI() {
+        return new OpenAPI()
+                .info(new Info().title("Your API Title")
+                                 .description("Your API Description")
+                                 .version("1.0"));
+    }
+}
+
+__________________________________________________________________________
+
+Application.properties
+
+# Specify the path of the OpenAPI documentation
+springdoc.api-docs.path=/api-docs
+
+# Specify the path of the Swagger UI
+springdoc.swagger-ui.path=/swagger-ui.html
+
+# Enable or disable Swagger UI
+springdoc.swagger-ui.enabled=true
+__________________________________________________________________________
+
+Controller.java
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/users")
+public class UsersController {
+    
+    @GetMapping("/status")
+    public String statusCheck() {
+        return "Working...";
+    }
+}
+__________________________________________________________________________
+
+Pom.xml
+
+<!-- https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-starter-webmvc-ui -->
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.0.2</version>
+</dependency>
